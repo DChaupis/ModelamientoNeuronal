@@ -1,0 +1,48 @@
+
+#Primera clase practica: Leaky-integrate-and-fire model 
+
+# Importando modulos
+
+import brian2 as b2 
+from neurodynex.leaky_integrate_and_fire import LIF
+from neurodynex.tools import input_factory,  plot_tools
+
+LIF.getting_started()
+LIF.print_default_parameters()
+
+
+# si deseamos cambiar los parámetros por defecto:
+    #LIF.simulate_LIF_neuron()
+"""data:
+V_REST = -70*b2.mV
+V_RESET = -65*b2.mV
+FIRING_THRESHOLD = -50*b2.mV
+MEMBRANE_RESISTANCE = 10. * b2.Mohm
+MEMBRANE_TIME_SCALE = 8. * b2.ms
+ABSOLUTE_REFRACTORY_PERIOD = 2.0 * b2.ms
+"""
+### calculamos
+print("resting potential: {}".format(LIF.V_REST))
+
+### modelamos
+# creamos un step_current, cuya amplitud = i_min
+i_min = 9*b2.namp # como hacerlo itinerativo?
+while True:
+    print(i_min)
+    i_min += 2*b2.namp
+    if i_min >= 15*b2.namp:
+        break
+#temps= range(2,12,2)
+#for temp in temps:
+    step_current = input_factory.get_step_current(
+        t_start=10,t_end=30, unit_time=b2.ms,
+        amplitude=i_min) # i_min ponle el valor 
+# run the LIF model
+    (state_monitor, spike_monitor) = LIF.simulate_LIF_neuron(      
+        input_current=step_current, simulation_time=100*b2.ms, firing_threshold=-30*b2.mV)
+# plot I and vm
+    plot_tools.plot_voltage_and_current_traces(
+        state_monitor, step_current, title="FABXPERIENCE-CAFE",
+        firing_threshold=LIF.FIRING_THRESHOLD)
+    print("N° de spikes: {}".format(spike_monitor.count[0]))
+    print("Umbral: {}".format(LIF.FIRING_THRESHOLD))
