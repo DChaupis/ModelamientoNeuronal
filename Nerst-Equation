@@ -9,3 +9,18 @@ nerst_v = (k_boltzman*T/q_K)*(np.log(extra/intra))
 print("mV: {}".format(nerst_v*1000))
 
 ###Tarea: calcular el mV (reversal potential) para Na (sodio). (Rpta.: +??mV)
+
+import numpy as np
+import brian2 as b2
+import brian2.units.allunits as unitVar
+
+#contante de Boltzman
+k_boltzman = 1.4*(10**-23) #unit=VC/K
+T = (273.16+23)*unitVar.kelvin #Kelvin+Celcius
+#ley de atraccion entra cargas electricas
+q_Na = 1.6*(10**-19)* b2.coulomb #unit=Coulomb
+"""milimetro"""
+extra = 120.0*b2.mm  #unit=mM, para sodio  
+intra = 5.0*b2.mm #unit=mM, para sodio
+nerst_v = (k_boltzman*T/q_Na)*(np.log(extra/intra))
+print("mV: {}".format(nerst_v*1000))
