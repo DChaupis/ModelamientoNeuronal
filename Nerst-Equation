@@ -1,0 +1,11 @@
+###Ec. De Nerst:
+import numpy as np
+k_boltzman = 1.4*(10**-23) #unit=VC/K
+T = 273.16+23 #Kelvin+Celcius
+q_K = 1.6*(10**-19) #unit=Coulomb
+extra = 5 #unit=mM, para potasio
+intra = 140 #unit=mM, para potasio
+nerst_v = (k_boltzman*T/q_K)*(np.log(extra/intra))
+print("mV: {}".format(nerst_v*1000))
+
+###Tarea: calcular el mV (reversal potential) para Na (sodio). (Rpta.: +??mV)
